@@ -47,9 +47,6 @@ public class Field extends JPanel {
 // BouncingBall выполняет сам в конструкторе
         balls.add(new BouncingBall(this));
     }
-
-    Курс «Прикладное программирование». Лабораторная работа No6
-© Стрикелев Д.А. 18
     // Метод синхронизированный, т.е. только один поток может
 // одновременно быть внутри
     public synchronized void pause() {
