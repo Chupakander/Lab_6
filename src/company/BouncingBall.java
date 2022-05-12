@@ -1,4 +1,5 @@
-package company;
+package src.company;
+
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -20,18 +21,18 @@ public class BouncingBall implements Runnable {
     private int speed;
     private double speedX;
     private double speedY;
+    private double redColor;
+    private double blueColor;
+    private double greenColor;
     // Конструктор класса BouncingBall
     public BouncingBall(Field field) {
 // Необходимо иметь ссылку на поле, по которому прыгает мяч,
 // чтобы отслеживать выход за его пределы
-
 // через getWidth(), getHeight()
         this.field = field;
 // Радиус мяча случайного размера
         radius = new Double(Math.random()*(MAX_RADIUS -
-
                 MIN_RADIUS)).intValue() + MIN_RADIUS;
-
 // Абсолютное значение скорости зависит от диаметра мяча,
 // чем он больше, тем медленнее
         speed = new Double(Math.round(5*MAX_SPEED / radius)).intValue();
@@ -44,11 +45,11 @@ public class BouncingBall implements Runnable {
 // Вычисляются горизонтальная и вертикальная компоненты скорости
         speedX = 3*Math.cos(angle);
         speedY = 3*Math.sin(angle);
+        redColor =  Math.random();
+        greenColor =  Math.random();
+        blueColor =  Math.random();
 // Цвет мяча выбирается случайно
-        color = new Color((float)Math.random(), (float)Math.random(),
-
-                (float)Math.random());
-
+        color = new Color((float) redColor, (float) greenColor, (float) blueColor);
 // Начальное положение мяча случайно
         x = Math.random()*(field.getSize().getWidth()-2*radius) + radius;
         y = Math.random()*(field.getSize().getHeight()-2*radius) + radius;
@@ -92,8 +93,6 @@ public class BouncingBall implements Runnable {
                 } else {
 // Просто смещаемся
                     x += speedX;
-
-
                     y += speedY;
                 }
 // Засыпаем на X миллисекунд, где X определяется
@@ -113,8 +112,18 @@ public class BouncingBall implements Runnable {
         canvas.setPaint(color);
         Ellipse2D.Double ball = new Ellipse2D.Double(x-radius, y-radius,
                 2*radius, 2*radius);
-
         canvas.draw(ball);
         canvas.fill(ball);
+    }
+
+    // Методы для трехцветного спектра
+    public double getRed(){
+        return redColor;
+    }
+    public double getBlue(){
+        return blueColor;
+    }
+    public double getGreen(){
+        return greenColor;
     }
 }

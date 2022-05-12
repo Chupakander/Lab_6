@@ -1,4 +1,4 @@
-package company;
+package src.company;
 
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
@@ -17,20 +17,19 @@ public class MainFrame extends JFrame {
     private static final int HEIGHT = 500;
     private JMenuItem pauseMenuItem;
     private JMenuItem resumeMenuItem;
+    private JMenuItem pauseGreenItem;
     // Поле, по которому прыгают мячи
     private Field field = new Field();
+
     // Конструктор главного окна приложения
     public MainFrame() {
         super("Программирование и синхронизация потоков");
         setSize(WIDTH, HEIGHT);
         Toolkit kit = Toolkit.getDefaultToolkit();
 // Отцентрировать окно приложения на экране
-        setLocation((kit.getScreenSize().width - WIDTH)/2,
-
-                (kit.getScreenSize().height - HEIGHT)/2);
-
+        setLocation((kit.getScreenSize().width - WIDTH) / 2,
+                (kit.getScreenSize().height - HEIGHT) / 2);
 // Установить начальное состояние окна развѐрнутым на весь экран
-
         setExtendedState(MAXIMIZED_BOTH);
 // Создать меню
         JMenuBar menuBar = new JMenuBar();
@@ -51,11 +50,12 @@ public class MainFrame extends JFrame {
         ballMenu.add(addBallAction);
         JMenu controlMenu = new JMenu("Управление");
         menuBar.add(controlMenu);
-        Action pauseAction = new AbstractAction("Приостановить движение"){
+        Action pauseAction = new AbstractAction("Приостановить движение") {
             public void actionPerformed(ActionEvent event) {
                 field.pause();
                 pauseMenuItem.setEnabled(false);
                 resumeMenuItem.setEnabled(true);
+                pauseGreenItem.setEnabled(false);
             }
         };
         pauseMenuItem = controlMenu.add(pauseAction);
@@ -65,13 +65,29 @@ public class MainFrame extends JFrame {
                 field.resume();
                 pauseMenuItem.setEnabled(true);
                 resumeMenuItem.setEnabled(false);
+                pauseGreenItem.setEnabled(true);
             }
         };
         resumeMenuItem = controlMenu.add(resumeAction);
         resumeMenuItem.setEnabled(false);
+
+        // метод для остановки зеленых
+        Action pauseGreen = new AbstractAction("Приостановить зеленые") {
+            public void actionPerformed(ActionEvent event) {
+                field.pauseGreen();
+                pauseMenuItem.setEnabled(true);
+                resumeMenuItem.setEnabled(true);
+                pauseGreenItem.setEnabled(false);
+            }
+        };
+        pauseGreenItem = controlMenu.add(pauseGreen);
+        pauseGreenItem.setEnabled(true);
+
+
 // Добавить в центр граничной компоновки поле Field
         getContentPane().add(field, BorderLayout.CENTER);
     }
+
     // Главный метод приложения
     public static void main(String[] args) {
 // Создать и сделать видимым главное окно приложения
