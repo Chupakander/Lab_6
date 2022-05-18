@@ -24,6 +24,8 @@ public class BouncingBall implements Runnable {
     private double redColor;
     private double blueColor;
     private double greenColor;
+    private double angle;
+
     // Конструктор класса BouncingBall
     public BouncingBall(Field field) {
 // Необходимо иметь ссылку на поле, по которому прыгает мяч,
@@ -41,7 +43,7 @@ public class BouncingBall implements Runnable {
         }
 // Начальное направление скорости тоже случайно,
 // угол в пределах от 0 до 2PI
-        double angle = Math.random()*2*Math.PI;
+        angle = Math.random()*2*Math.PI;
 // Вычисляются горизонтальная и вертикальная компоненты скорости
         speedX = 3*Math.cos(angle);
         speedY = 3*Math.sin(angle);
@@ -84,7 +86,7 @@ public class BouncingBall implements Runnable {
                 if (y + speedY <= radius) {
 // Достигли верхней стенки
                     speedY = -speedY;
-                    y = radius;
+                    y = radius ;
                 } else
                 if (y + speedY >= field.getHeight() - radius) {
 // Достигли нижней стенки
@@ -110,20 +112,14 @@ public class BouncingBall implements Runnable {
     public void paint(Graphics2D canvas) {
         canvas.setColor(color);
         canvas.setPaint(color);
-        Ellipse2D.Double ball = new Ellipse2D.Double(x-radius, y-radius,
-                2*radius, 2*radius);
+        Ellipse2D.Double ball = new Ellipse2D.Double(x - radius, y - radius,
+                2 * radius, 2 * radius);
         canvas.draw(ball);
         canvas.fill(ball);
     }
-
     // Методы для трехцветного спектра
-    public double getRed(){
-        return redColor;
-    }
-    public double getBlue(){
-        return blueColor;
-    }
-    public double getGreen(){
-        return greenColor;
+
+    public double getAngle(){
+        return radius;
     }
 }

@@ -17,18 +17,17 @@ public class MainFrame extends JFrame {
     private static final int HEIGHT = 500;
     private JMenuItem pauseMenuItem;
     private JMenuItem resumeMenuItem;
-    private JMenuItem pauseGreenItem;
+    private JMenuItem pauseAngleItem;
     // Поле, по которому прыгают мячи
     private Field field = new Field();
-
     // Конструктор главного окна приложения
     public MainFrame() {
         super("Программирование и синхронизация потоков");
         setSize(WIDTH, HEIGHT);
         Toolkit kit = Toolkit.getDefaultToolkit();
 // Отцентрировать окно приложения на экране
-        setLocation((kit.getScreenSize().width - WIDTH) / 2,
-                (kit.getScreenSize().height - HEIGHT) / 2);
+        setLocation((kit.getScreenSize().width - WIDTH)/2,
+                (kit.getScreenSize().height - HEIGHT)/2);
 // Установить начальное состояние окна развѐрнутым на весь экран
         setExtendedState(MAXIMIZED_BOTH);
 // Создать меню
@@ -50,12 +49,12 @@ public class MainFrame extends JFrame {
         ballMenu.add(addBallAction);
         JMenu controlMenu = new JMenu("Управление");
         menuBar.add(controlMenu);
-        Action pauseAction = new AbstractAction("Приостановить движение") {
+        Action pauseAction = new AbstractAction("Приостановить движение"){
             public void actionPerformed(ActionEvent event) {
                 field.pause();
                 pauseMenuItem.setEnabled(false);
                 resumeMenuItem.setEnabled(true);
-                pauseGreenItem.setEnabled(false);
+                pauseAngleItem.setEnabled(false);
             }
         };
         pauseMenuItem = controlMenu.add(pauseAction);
@@ -65,29 +64,28 @@ public class MainFrame extends JFrame {
                 field.resume();
                 pauseMenuItem.setEnabled(true);
                 resumeMenuItem.setEnabled(false);
-                pauseGreenItem.setEnabled(true);
+                pauseAngleItem.setEnabled(true);
             }
         };
         resumeMenuItem = controlMenu.add(resumeAction);
         resumeMenuItem.setEnabled(false);
 
         // метод для остановки зеленых
-        Action pauseGreen = new AbstractAction("Приостановить зеленые") {
+        Action pauseAngle = new AbstractAction("Приостановить шары большие 30") {
             public void actionPerformed(ActionEvent event) {
-                field.pauseGreen();
+                field.pauseAngle();
                 pauseMenuItem.setEnabled(true);
                 resumeMenuItem.setEnabled(true);
-                pauseGreenItem.setEnabled(false);
+                pauseAngleItem.setEnabled(false);
             }
         };
-        pauseGreenItem = controlMenu.add(pauseGreen);
-        pauseGreenItem.setEnabled(true);
+        pauseAngleItem = controlMenu.add(pauseAngle);
+        pauseAngleItem.setEnabled(true);
 
 
 // Добавить в центр граничной компоновки поле Field
         getContentPane().add(field, BorderLayout.CENTER);
     }
-
     // Главный метод приложения
     public static void main(String[] args) {
 // Создать и сделать видимым главное окно приложения

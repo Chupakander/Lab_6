@@ -13,7 +13,7 @@ import javax.swing.Timer;
 public class Field extends JPanel {
     // Флаг приостановленности движения
     private boolean paused;
-    private boolean pausedGreen;
+    private boolean pausedAngle;
     // Динамический список скачущих мячей
     private ArrayList<BouncingBall> balls = new ArrayList<BouncingBall>(10);
     // Класс таймер отвечает за регулярную генерацию событий ActionEvent
@@ -57,16 +57,16 @@ public class Field extends JPanel {
         // Включить режим паузы
         paused = true;
     }
-    public synchronized void pauseGreen() {
+    public synchronized void pauseAngle() {
         // Включить режим паузы для зеленых
-        pausedGreen = true;
+        pausedAngle = true;
     }
     // Метод синхронизированный, т.е. только один поток может
     // одновременно быть внутри
     public synchronized void resume() {
         // Выключить режим паузы
         paused = false;
-        pausedGreen = false;
+        pausedAngle = false;
         // Будим все ожидающие продолжения потоки
         notifyAll();
     }
@@ -80,7 +80,7 @@ public class Field extends JPanel {
             wait();
         }
         // добавляем условие для зеленого спектра
-        if (pausedGreen && (2*(ball.getRed()+ball.getBlue())) < ball.getGreen()){
+        if ( pausedAngle && (30<ball.getAngle())){
             wait();
         }
     }
